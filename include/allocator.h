@@ -1,3 +1,6 @@
+#ifndef ALLOCATOR_H
+#define ALLOCATOR_H
+
 #include <stddef.h> // Include the header file for NULL
 
 #include "block.h"
@@ -10,3 +13,5 @@
 struct Block *initial_block = NULL;
 
 void initialize_allocator(size_t size);
+
+#endif

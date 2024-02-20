@@ -1,3 +1,6 @@
+#ifndef BLOCK_H
+#define BLOCK_H
+
 struct Block {
 	// header
 	
@@ -6,6 +9,11 @@ struct Block {
 	// flag to indicate whether the block is free or not - 1 for free, 0 - for not free
 	unsigned char free;
 
+	// previous block in the list
+	struct Block *prev;
+
 	// next block in the list
 	struct Block *next;
 };
+
+#endif

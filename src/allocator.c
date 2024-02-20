@@ -14,4 +14,5 @@ void initialize_allocator(size_t size) {
 	initial_block->size = size; // size of the block
 	initial_block->free = 1; // mark it as free
 	initial_block->next = NULL; // no next block currently
+	initial_block->prev = NULL; // no prev block currently
 }
