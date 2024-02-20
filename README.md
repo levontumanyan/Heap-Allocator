@@ -13,6 +13,10 @@ void free(void *ptr);
 // the above two will be implemented first later calloc and realloc
 ```
 
+## Steps to implement
+- void initialize_allocator(size_t size)
+	- this function will be called the first time when a memory allocation request is sent. it will create a large block with a certain size.
+
 ## High level details from chatgpt
 
 1. **Define the Data Structure**: You'll need a data structure to keep track of the size and allocation status of each block. This could be a simple struct with size and a flag indicating whether the block is free or not.
