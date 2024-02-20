@@ -1,9 +1,17 @@
 # Memory Allocator in C
 
 [Writing a memory allocator](https://dmitrysoshnikov.com/compilers/writing-a-memory-allocator/#video-lecture)
+[Snippet for a memory allocator in C](https://gist.github.com/apsun/caa3c5552dce7b13b898b70569b1f239)
 
 ## Things to consider
 - Memory Alignment - padding
+
+## Functions to implement highest level
+```c
+void *malloc(size_t size);
+void free(void *ptr);
+// the above two will be implemented first later calloc and realloc
+```
 
 ## High level details from chatgpt
 
