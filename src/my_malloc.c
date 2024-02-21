@@ -3,8 +3,9 @@
 
 struct Block *my_malloc(size_t size) {
 	// search for a free block in the linked list of blocks
-	struct Block *current_block = initialize_allocator(POOL_SIZE);
+	size = ((size) > POOL_SIZE ? size : POOL_SIZE);
 
+	struct Block *current_block = initialize_allocator(POOL_SIZE);
 	if (current_block == NULL) {
 		// handle error
 		return NULL;
@@ -33,6 +34,7 @@ struct Block *my_malloc(size_t size) {
 	}
 
 	// the case where nothing has been returned so far. Meaning in our existing memory pool we didn't find a match. Therefore we gotta allocate more raw memory.
+	//allocate_more(size);
 
 }
 
