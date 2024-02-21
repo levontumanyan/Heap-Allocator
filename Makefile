@@ -17,8 +17,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/*.h
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
+.PHONY: tests
 # Rule to build the tests
-tests: tests/test_allocator.c src/allocator.c src/my_malloc.c src/block.c
+tests: tests/test_allocator.c src/allocator.c src/my_malloc.c
 	$(CC) $(CFLAGS) -o bin/test_allocator $^
 
 # Rule to run the tests
