@@ -1,0 +1,28 @@
+CC := clang
+CFLAGS := -Wall -Wextra -Iinclude
+SRC_DIR := src
+OBJ_DIR := bin
+BIN_DIR := bin
+SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
+OBJ_FILES := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
+TARGET := $(BIN_DIR)/allocate
+TEST_DIR := tests
+TEST_FILES := $(wildcard $(TEST_DIR)/*.c)
+TEST_TARGETS := $(patsubst $(TEST_DIR)/%.c, $(BIN_DIR)/%, $(TEST_FILES))
+
+$(TARGET): $(OBJ_FILES)
+    $(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/*.h
+    mkdir -p $(OBJ_DIR)
+    $(CC) $(CFLAGS) -c -o $@ $<
+
+$(BIN_DIR)/%: $(TEST_DIR)/%.c $(SRC_FILES)
+    $(CC) $(CFLAGS) -o $@ $^
+
+.PHONY: tests
+tests: $(TEST_TARGETS)
+
+.PHONY: clean
+clean:
+    rm -rf $(OBJ_DIR)/*.o $(TARGET) $(TEST_TARGETS)
