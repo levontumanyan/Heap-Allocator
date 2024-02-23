@@ -1,17 +1,5 @@
 #include "test_include.h"
 
-int main() {
-	size_t size = 1024;
-	struct Block *initial_pool = create_initial_pool(size);
-	test_initial_pool_not_null(initial_pool);
-	test_initial_pool_free(initial_pool);
-	test_initial_pool_size(initial_pool);
-	test_initial_pool_prev_null(initial_pool);
-	test_initial_pool_next_null(initial_pool);
-	test_singleton_behaviour(initial_pool);
-	return 0;
-}
-
 struct Block *create_initial_pool(size_t size) {
 	printf("Initializing the allocator...\n");
 	struct Block *first_pool = initialize_allocator(size);
@@ -59,5 +47,5 @@ void test_singleton_behaviour(struct Block *initial_pool1) {
 
 	printf("Checking for the singleton behaviour of initialize allocator. Sizes same ❓\n");
 	ASSERT(initial_pool1 == initial_pool2, "Two pools returned different sizes. 😨");
-	printf("Singleton behaviour confirmed sizes are the same. ✅\n", initial_pool1, initial_pool2);
+	printf("Singleton behaviour confirmed sizes are the same. ✅\n");
 }
