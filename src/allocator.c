@@ -24,7 +24,7 @@ Block *initialize_allocator(size_t size) {
 	}
 
 	initial_pool->size = size; // size of the block
-	initial_pool->free = 1; // mark it as free
+	initial_pool->free = 1;    // mark it as free
 	initial_pool->prev = NULL; // no prev block currently
 	initial_pool->next = NULL; // no next block currently
 
@@ -50,7 +50,7 @@ Block *allocate_more(size_t size) {
 	new_pool->free = 1;
 	new_pool->next = NULL;
 	// determine the last block to make it the prev of the new pool
-	Block *current_block = initialize_allocator(INITIAL_POOL_SIZE);
+	Block *current_block = get_initial_pool();
 
 	while (current_block != NULL) {
 		current_block = current_block->next;
