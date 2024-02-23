@@ -1,11 +1,11 @@
 #include "allocator.h"
 #include "my_malloc.h"
 
-struct Block *my_malloc(size_t size) {
+Block *my_malloc(size_t size) {
 	// search for a free block in the linked list of blocks
 	size = ((size) > POOL_SIZE ? size : POOL_SIZE);
 
-	struct Block *current_block = initialize_allocator(POOL_SIZE);
+	Block *current_block = initialize_allocator(POOL_SIZE);
 	if (current_block == NULL) {
 		// handle error
 		return NULL;
@@ -18,7 +18,7 @@ struct Block *my_malloc(size_t size) {
 				// this block cannot serve for our needs
 				current_block = current_block->next;	
 			}
-			else if (current_block->size <= size + sizeof(struct Block) && current_block->size >= size)
+			else if (current_block->size <= size + sizeof(Block) && current_block->size >= size)
 			{
 				return current_block;
 			}
@@ -38,9 +38,9 @@ struct Block *my_malloc(size_t size) {
 
 }
 
-struct Block *split_block(struct Block *block_to_split, size_t size) {
-	struct Block *returning_chunk = block_to_split;
-	struct Block *remaining_chunk = (struct Block *)((char *)block_to_split + sizeof(struct Block) + size);
+Block *split_block(Block *block_to_split, size_t size) {
+	Block *returning_chunk = block_to_split;
+	Block *remaining_chunk = (Block *)((char *)block_to_split + sizeof(Block) + size);
 	
 	returning_chunk->free = 0;
 	returning_chunk->next = remaining_chunk;
@@ -58,7 +58,7 @@ struct Block *split_block(struct Block *block_to_split, size_t size) {
 		remaining_chunk->next = block_to_split->next;
 	}
 	remaining_chunk->prev = returning_chunk;
-	remaining_chunk->size = block_to_split->size - size - sizeof(struct Block);
+	remaining_chunk->size = block_to_split->size - size - sizeof(Block);
 
 	return returning_chunk;
 }

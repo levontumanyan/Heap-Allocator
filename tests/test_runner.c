@@ -2,7 +2,7 @@
 
 int main() {
 	size_t size = 1024;
-	struct Block *initial_pool = create_initial_pool(size);
+	Block *initial_pool = create_initial_pool(size);
 	test_initial_pool_not_null(initial_pool);
 	test_initial_pool_free(initial_pool);
 	test_initial_pool_size(initial_pool);

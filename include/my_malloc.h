@@ -7,7 +7,7 @@
 
 #include "block.h"
 
-struct Block *my_malloc(size_t size);
-struct Block *split_block(struct Block *block_to_split, size_t size);
+Block *my_malloc(size_t size);
+Block *split_block(Block *block_to_split, size_t size);
 
 #endif

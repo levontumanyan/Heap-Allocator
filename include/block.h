@@ -1,7 +1,7 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-struct Block {
+typedef Block {
 	// header
 	
 	// keeps track of the size of the block
@@ -10,10 +10,10 @@ struct Block {
 	unsigned char free;
 
 	// previous block in the list
-	struct Block *prev;
+	Block *prev;
 
 	// next block in the list
-	struct Block *next;
-};
+	Block *next;
+} Block;
 
 #endif

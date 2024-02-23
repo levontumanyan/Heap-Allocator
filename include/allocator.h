@@ -9,7 +9,7 @@
 // initial size of the memory pool
 #define INITIAL_POOL_SIZE 4096
 
-struct Block *initialize_allocator(size_t size);
-struct Block *allocate_more(size_t size);
+Block *initialize_allocator(size_t size);
+Block *allocate_more(size_t size);
 
 #endif

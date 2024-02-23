@@ -1,8 +1,13 @@
 #include "allocator.h"
 
-struct Block *initialize_allocator(size_t size) {
+Block *get_initial_pool() {
+	static Block *initial_pool = NULL;
+	return initial_pool;
+}
+
+Block *initialize_allocator(size_t size) {
 	// Declare initial_pool as a static variable
-	static struct Block *initial_pool = NULL;
+	Block *initial_pool = get_initial_pool();
 
 	// if the initial memory pool has been allocated just return it
 	if (initial_pool != NULL) {
@@ -10,7 +15,7 @@ struct Block *initialize_allocator(size_t size) {
 	}
 
 	// Allocate the memory pool
-	initial_pool = (struct Block *) mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	initial_pool = (Block *) mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
 	// Check if mmap is successful
 	if (initial_pool == MAP_FAILED) {
@@ -26,9 +31,14 @@ struct Block *initialize_allocator(size_t size) {
 	return initial_pool;
 }
 
-struct Block *allocate_more(size_t size) {
+Block *allocate_more(size_t size) {
+	// If initial memory hasn't been allocated return NULL
+	if (get_initial_pool() == NULL) {
+		return NULL;
+	}
+	
 	// in case if more allocation pool is needed. Allocate new memory pool
-	struct Block *new_pool = (struct Block *) mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	Block *new_pool = (Block *) mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	
 	// Check if mmap is successful
 	if (new_pool == MAP_FAILED) {
@@ -40,7 +50,7 @@ struct Block *allocate_more(size_t size) {
 	new_pool->free = 1;
 	new_pool->next = NULL;
 	// determine the last block to make it the prev of the new pool
-	struct Block *current_block = initialize_allocator(INITIAL_POOL_SIZE);
+	Block *current_block = initialize_allocator(INITIAL_POOL_SIZE);
 
 	while (current_block != NULL) {
 		current_block = current_block->next;
