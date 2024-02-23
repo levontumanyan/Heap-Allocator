@@ -10,6 +10,11 @@ OBJ_FILES := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
 TARGET := $(BIN_DIR)/allocate
 
+TEST_DIR := tests
+TEST_FILES := $(wildcard $(TEST_DIR)/*.c)
+TEST_SRC_FILES := $(filter-out src/main.c, $(SRC_FILES))
+TEST_TARGET := $(BIN_DIR)/test_runner
+
 $(TARGET): $(OBJ_FILES)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
@@ -17,16 +22,16 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/*.h
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
+$(TEST_TARGET): $(TEST_DIR)/test_runner.c $(TEST_SRC_FILES) $(TEST_FILES)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
 .PHONY: tests
-# Rule to build the tests
-tests: tests/test_initialize_allocator.c src/allocator.c
-	$(CC) $(CFLAGS) -o bin/test_allocator $^
+tests: $(TEST_TARGET)
 
 # Rule to run the tests
 test: tests
-	./bin/test_allocator
+	./bin/test_runner
 
 .PHONY: clean
-
 clean:
-	rm -rf $(OBJ_DIR)/*.o $(TARGET)
+	rm $(OBJ_DIR)/*.o $(TARGET) $(TEST_TARGET)
