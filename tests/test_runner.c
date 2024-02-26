@@ -9,5 +9,7 @@ int main() {
 	test_initial_pool_prev_null(initial_pool);
 	test_initial_pool_next_null(initial_pool);
 	test_singleton_behaviour(initial_pool);
+	test_small_my_malloc();
+	test_my_free();
 	return 0;
 }

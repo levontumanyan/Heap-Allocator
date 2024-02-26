@@ -1,6 +1,8 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include <stddef.h> // for size_t
+
 typedef struct Block {
 	// header
 	

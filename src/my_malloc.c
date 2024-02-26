@@ -21,6 +21,7 @@ Block *my_malloc(size_t size) {
 			else if (current_block->size <= size + sizeof(Block) && current_block->size >= size)
 			{
 				// cast the pointer to void to keep it generic, and return a pointer to the memory after the block
+				current_block->free = 0;
 				return (void *)(current_block + 1);
 			}
 			else {
