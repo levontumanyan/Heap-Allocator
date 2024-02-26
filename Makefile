@@ -34,4 +34,4 @@ test: tests
 
 .PHONY: clean
 clean:
-	rm $(OBJ_DIR)/*.o $(TARGET) $(TEST_TARGET)
+	rm $(OBJ_DIR)/*.o $(TARGET) $(TEST_TARGET) 
