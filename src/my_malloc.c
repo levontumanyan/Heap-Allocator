@@ -20,7 +20,8 @@ Block *my_malloc(size_t size) {
 			}
 			else if (current_block->size <= size + sizeof(Block) && current_block->size >= size)
 			{
-				return current_block;
+				// cast the pointer to void to keep it generic, and return a pointer to the memory after the block
+				return (void *)(current_block + 1);
 			}
 			else {
 				// the size of the current block is greater than what is requested, we should break the block into two "chunks". Returning chunk is what we want to return, remaining is what is left over.
@@ -60,5 +61,5 @@ Block *split_block(Block *block_to_split, size_t size) {
 	remaining_chunk->prev = returning_chunk;
 	remaining_chunk->size = block_to_split->size - size - sizeof(Block);
 
-	return returning_chunk;
+	return (void *)(returning_chunk + 1);
 }

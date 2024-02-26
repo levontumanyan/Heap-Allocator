@@ -8,6 +8,7 @@
 
 #include "block.h"
 
+Block *get_initial_pool(size_t size);
 Block *initialize_allocator(size_t size);
 Block *allocate_more(size_t size);
 

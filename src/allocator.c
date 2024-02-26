@@ -1,14 +1,8 @@
 #include "allocator.h"
 
-Block *get_initial_pool() {
+Block *get_initial_pool(size_t size) {
 	static Block *initial_pool = NULL;
-	return initial_pool;
-}
-
-Block *initialize_allocator(size_t size) {
-	// Declare initial_pool as a static variable
-	Block *initial_pool = get_initial_pool();
-
+	
 	// if the initial memory pool has been allocated just return it
 	if (initial_pool != NULL) {
 		return initial_pool;
@@ -23,6 +17,12 @@ Block *initialize_allocator(size_t size) {
 		return NULL;
 	}
 
+	return initial_pool;
+}
+
+Block *initialize_allocator(size_t size) {
+	Block *initial_pool = get_initial_pool(size);
+
 	initial_pool->size = size; // size of the block
 	initial_pool->free = 1;    // mark it as free
 	initial_pool->prev = NULL; // no prev block currently
@@ -33,7 +33,7 @@ Block *initialize_allocator(size_t size) {
 
 Block *allocate_more(size_t size) {
 	// If initial memory hasn't been allocated return NULL
-	if (get_initial_pool() == NULL) {
+	if (get_initial_pool(size) == NULL) {
 		return NULL;
 	}
 	
@@ -50,7 +50,7 @@ Block *allocate_more(size_t size) {
 	new_pool->free = 1;
 	new_pool->next = NULL;
 	// determine the last block to make it the prev of the new pool
-	Block *current_block = get_initial_pool();
+	Block *current_block = get_initial_pool(size);
 
 	while (current_block != NULL) {
 		current_block = current_block->next;

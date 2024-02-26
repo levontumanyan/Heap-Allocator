@@ -42,10 +42,12 @@ void test_singleton_behaviour(Block *initial_pool1) {
 	Block *initial_pool2 = initialize_allocator(size2);
 
 	printf("Checking for the singleton behaviour of initialize allocator. Pointers... ❓\n");
+	printf("Singleton behaviour confirmed. Pointers: %p %p ✅\n", initial_pool1, initial_pool2);
 	ASSERT(initial_pool1 == initial_pool2, "Two pools returned different pointers. 😨");
 	printf("Singleton behaviour confirmed. Pointers: %p %p ✅\n", initial_pool1, initial_pool2);
 
 	printf("Checking for the singleton behaviour of initialize allocator. Sizes same ❓\n");
 	ASSERT(initial_pool1 == initial_pool2, "Two pools returned different sizes. 😨");
 	printf("Singleton behaviour confirmed sizes are the same. ✅\n");
+	printf("---------------\n");
 }

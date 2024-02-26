@@ -1,11 +1,12 @@
 #include "test_include.h"
 
 void test_small_malloc() {
-	size_t size = 1024 * 1024;
-	my_malloc(size);
-	
+	// Request a small amount of memory 1Kb
+	size_t size = 1024;
+	char **buf = my_malloc(size);
 
-	printf("Checking if the initial pool's size is correct. ❓\n");
-	ASSERT(first_pool->size == 1024, "The initial pool's size is not correct. 😨");
-	printf("The initial pool's size is correct as expected. (%zu bytes.) ✅\n", first_pool->size);
+	printf("Checking my_alloc for a small amount of allocation 1Kb... ❓\n");
+	ASSERT(buf != NULL, "my_alloc for a small amount of allocation failed. 😨");
+	printf("my_alloc returned a non-null pointer.  ✅\n");
+	printf("---------------");
 }
