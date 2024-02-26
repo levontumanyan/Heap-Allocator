@@ -21,7 +21,18 @@ unsigned char my_free(void *ptr) {
 }
 
 unsigned char merge_blocks(Block* block) {
-	// thinking about doing a for loop, at first to the "left" of the passed block.
-	// we go to the previous block check if it is free, if it is we merge them together
-	// when we merge we have to make sure to remove the info about the merging block
+	/* thinking about doing a for loop, at first to the "left" of the passed block.
+	we go to the previous block check if it is free, if it is we merge them together
+	when we merge we have to make sure to remove the info about the merging block */
+
+	// let's keep track of the size of the blocks counted so far
+	size_t new_size;
+	// first let's go back until we see a non-free block
+	Block *current_block = block;
+	while(current_block != NULL || current_block->free == 0) {
+		new_size += current_block->size;
+		current_block = current_block->prev;
+	}
+
+	/* when we come out of the for loop current_block will either be NULL or not free. in the case when current_block is NULL means that the next block of current block should become the new beginning block.  */
 }
