@@ -1,7 +1,10 @@
 # Memory Allocator in C
 
 [Writing a memory allocator](https://dmitrysoshnikov.com/compilers/writing-a-memory-allocator/#video-lecture)
+
 [Snippet for a memory allocator in C](https://gist.github.com/apsun/caa3c5552dce7b13b898b70569b1f239)
+
+[Memory Allocators 101 - Write a simple memory allocator](https://arjunsreedharan.org/post/148675821737/memory-allocators-101-write-a-simple-memory)
 
 ## Things to consider
 - Memory Alignment - padding
