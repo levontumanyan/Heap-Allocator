@@ -3,6 +3,7 @@
 
 #include "allocator.h"
 #include "my_malloc.h"
+#include "free.h"
 
 Block *create_initial_pool(size_t size);
 void test_initial_pool_not_null(Block *first_pool);
