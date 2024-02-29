@@ -50,6 +50,7 @@ In the context of a heap allocator, "blocks" refer to chunks of memory within th
 
 ## Todo
 
-1. Understand and improve the data alignment / padding part.
-2. is our code correct in the sense of blocks not somehow being created where a data pointed by the block should be. 
-3. Comprehensive testing needed for the malloc
+1. Add actual memory freeing from the process space, i.e. munmap
+2. Understand and improve the data alignment / padding part.
+3. is our code correct in the sense of blocks not somehow being created where a data pointed by the block should be. 
+4. Comprehensive testing needed for the malloc
