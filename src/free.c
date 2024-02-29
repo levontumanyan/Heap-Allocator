@@ -21,10 +21,11 @@ unsigned char my_free(void *ptr) {
 	}
 }
 
-unsigned char merge_blocks(Block* block) {
+Block *merge_blocks(Block* block) {
 	if (block == NULL) {
-		return 1;
+		return NULL;
 	}
+	
 	/* thinking about doing a while loop, at first to the "left" of the passed block.
 	we go to the previous block check if it is free, if it is we merge them together
 	when we merge we have to make sure to remove the info about the merging block */
@@ -45,9 +46,9 @@ unsigned char merge_blocks(Block* block) {
 	// first block to start combining from
 	Block *beginning_block = last_visited_block;
 	
-	// let's go back to the block and start going to the right and finding free blocks next to each other to combine
-	current_block = block;
-	last_visited_block = block;
+	// let's go back to the block's next one since block has already been visited and start going to the right and finding free blocks next to each other to combine
+	current_block = block->next;
+	last_visited_block = block->next;
 	while(current_block != NULL && current_block->free == 1) {
 		new_size += current_block->size;
 		last_visited_block = current_block;
@@ -69,4 +70,6 @@ unsigned char merge_blocks(Block* block) {
 	if (combined_free_block->next != NULL) {
 		combined_free_block->next->prev = combined_free_block;
 	}
+
+	return combined_free_block;
 }

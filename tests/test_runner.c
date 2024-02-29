@@ -11,5 +11,7 @@ int main() {
 	test_singleton_behaviour(initial_pool);
 	test_small_my_malloc();
 	test_my_free();
+	test_merge_blocks_null();
+	test_merge_blocks();
 	return 0;
 }

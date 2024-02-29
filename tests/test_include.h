@@ -14,6 +14,8 @@ void test_initial_pool_next_null(Block *first_pool);
 void test_singleton_behaviour(Block *initial_pool1);
 void test_small_my_malloc();
 void test_my_free();
+void test_merge_blocks_null();
+void test_merge_blocks();
 
 #define ASSERT(condition, message) \
 	do { \

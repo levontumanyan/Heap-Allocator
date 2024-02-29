@@ -1,7 +1,7 @@
 #include "allocator.h"
 #include "my_malloc.h"
 
-Block *my_malloc(size_t size) {
+void *my_malloc(size_t size) {
 	// search for a free block in the linked list of blocks
 	size = ((size) > POOL_SIZE ? size : POOL_SIZE);
 

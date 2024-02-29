@@ -5,7 +5,7 @@
 
 #include "block.h"
 
-Block *my_malloc(size_t size);
+void *my_malloc(size_t size);
 Block *split_block(Block *block_to_split, size_t size);
 
 #endif
