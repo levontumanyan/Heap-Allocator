@@ -19,6 +19,11 @@ unsigned char my_free(void *ptr) {
 		block->free = 1;
 		return 0;
 	}
+	merge_blocks(block);
+}
+
+unsigned char unmmap_memory(Block *block) {
+	
 }
 
 Block *merge_blocks(Block* block) {
