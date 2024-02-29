@@ -24,7 +24,7 @@ void free(void *ptr);
 
 1. **Define the Data Structure**: You'll need a data structure to keep track of the size and allocation status of each block. This could be a simple struct with size and a flag indicating whether the block is free or not.
 
-2. **Initialize the Heap**: When your program starts, you'll need to set aside a chunk of memory to act as your heap. This can be done using the `sbrk()` system call.
+2. **Initialize the Heap**: When your program starts, you'll need to set aside a chunk of memory to act as your heap. This can be done using the `mmap()` system call.
 
 3. **Implement `malloc()`:** This function should find a free block that's large enough to satisfy the request. If no such block exists, it should increase the size of the heap. Once a suitable block is found, it should be marked as allocated and its address returned.
 
@@ -48,3 +48,8 @@ In the context of a heap allocator, "blocks" refer to chunks of memory within th
 
 5. **Fragmentation**: Over time, as blocks are allocated and deallocated, the heap can become fragmented. This means that the free memory is divided into small, non-contiguous blocks. This can make it hard to find a large enough block for a `malloc()` call, even if there's enough total free memory. To handle this, allocators often include logic to defragment the heap, such as coalescing adjacent free blocks.
 
+## Todo
+
+1. Understand and improve the data alignment / padding part.
+2. is our code correct in the sense of blocks not somehow being created where a data pointed by the block should be. 
+3. Comprehensive testing needed for the malloc
