@@ -5,25 +5,59 @@ return 0 if success and non-zero otherwise
 - what about actually releasing memory from the process not just marking the block free***
 - at some point can add checks to make sure the passed pointer does point to a block
 - make sure to coalesce free blocks next to each other - to reduce fragmentation
+- returns 1 if block is already free, 2 if the block got freed but munmap failed.
+- returns 4 if block pointed to by ptr is NULL
 */
 unsigned char my_free(void *ptr) {
 	// do i need a block finder function here
 	Block *block = (Block*)ptr - 1;
 
+	if (block == NULL) {
+		return 4;
+	}
+
 	if (block->free == 1) {
 		return 1;
 	}
 	else if (block->free == 0)
-	{	
+	{
 		// Mark the block as free
 		block->free = 1;
+		
+		// check if the block is at the end of the heap and reduce the heap size
+		if (block->next == NULL) {
+			// also we should traverse and munmap all the blocks
+			Block *current_block = block;
+			Block *last_visited_block = block;
+			size_t freeable_size = 0;
+
+			while (current_block != NULL && current_block->free == 1) {
+				freeable_size += current_block->size + sizeof(Block);
+				last_visited_block = current_block;
+				current_block = current_block->prev;
+			}
+
+			// if the current block is not null and it has a prev. we change the previous block's next to be NULL
+			if (current_block != NULL && current_block->prev != NULL) {
+				current_block->prev->next = NULL;
+			}
+
+			if (current_block == NULL) {
+				if (munmap(last_visited_block, freeable_size) != 0) {
+					return 2;
+				};
+			}
+			else
+			{
+				if (munmap(current_block, freeable_size) != 0) {
+					return 3;
+				};
+			}
+		}
+		// add an if here as well
+		merge_blocks(block);
 		return 0;
 	}
-	merge_blocks(block);
-}
-
-unsigned char unmmap_memory(Block *block) {
-	
 }
 
 Block *merge_blocks(Block* block) {
@@ -36,11 +70,11 @@ Block *merge_blocks(Block* block) {
 	when we merge we have to make sure to remove the info about the merging block */
 
 	// let's keep track of the size of the blocks counted so far
-	size_t new_size = 0;
-	
-	// first let's go back until we see a non-free block
+	size_t new_size = 0;	
 	Block *last_visited_block = block;
 	Block *current_block = block;
+	
+	// first let's go back until we see a non-free block
 	while(current_block != NULL && current_block->free == 1) {
 		new_size += current_block->size;
 		last_visited_block = current_block;
