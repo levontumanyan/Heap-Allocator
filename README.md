@@ -13,7 +13,8 @@
 ```c
 void *malloc(size_t size);
 void free(void *ptr);
-// the above two will be implemented first later calloc and realloc
+Block *merge_blocks(Block* block);
+// the above three will be implemented first later calloc and realloc
 ```
 
 ## Steps to implement
