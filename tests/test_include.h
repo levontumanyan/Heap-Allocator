@@ -16,6 +16,7 @@ void test_singleton_behaviour(Block *initial_pool1);
 
 void test_small_my_malloc();
 void test_my_malloc_block();
+void test_mult_my_malloc_block();
 
 void test_my_free();
 
