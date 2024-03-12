@@ -3,7 +3,7 @@
 
 void *my_malloc(size_t size) {
 	// search for a free block in the linked list of blocks
-	size = ((size) > POOL_SIZE ? size : POOL_SIZE);
+	size = (size > POOL_SIZE ? size : POOL_SIZE);
 
 	Block *current_block = initialize_allocator(POOL_SIZE);
 	if (current_block == NULL) {
