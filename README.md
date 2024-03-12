@@ -51,7 +51,8 @@ In the context of a heap allocator, "blocks" refer to chunks of memory within th
 
 ## Todo
 
-1. Add actual memory freeing from the process space, i.e. munmap
+1. Bug with my_alloc. If called several times the pointer returns the same 
+2. Add actual memory freeing from the process space, i.e. munmap
    1. Currently there is an issue with the my_free function. The test for it is returning a seg fault.
 2. Understand and improve the data alignment / padding part. [Data Structure Alignment]([https://](https://en.wikipedia.org/wiki/Data_structure_alignment#:~:text=Data%20structure%20padding,-Although%20the%20compiler&text=To%20maintain%20proper%20alignment%20the,structures%20to%20be%20properly%20aligned.))
 3. is our code correct in the sense of blocks not somehow being created where a data pointed by the block should be. 
