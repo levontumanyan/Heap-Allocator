@@ -1,63 +1,47 @@
-#include "free.h"
+#include <errno.h>
 
+#include "free.h"
 /* 
 return 0 if success and non-zero otherwise
 - what about actually releasing memory from the process not just marking the block free***
 - at some point can add checks to make sure the passed pointer does point to a block
 - make sure to coalesce free blocks next to each other - to reduce fragmentation
 - returns 1 if block is already free, 2 if the block got freed but munmap failed.
-- returns 4 if block pointed to by ptr is NULL
+- returns 3 if block pointed to by ptr is NULL or if ptr passed is null
 */
 unsigned char my_free(void *ptr) {
 	// do i need a block finder function here
 	Block *block = (Block*)ptr - 1;
 
-	if (block == NULL) {
-		return 4;
+	if (ptr == NULL || block == NULL) {
+		return 3;
 	}
 
 	if (block->free == 1) {
 		return 1;
 	}
-	else if (block->free == 0)
+
+	// merge blocks
+	block = merge_blocks(block);
+	
+	if (block->free == 0)
 	{
 		// Mark the block as free
 		block->free = 1;
 		
 		// check if the block is at the end of the heap and reduce the heap size
 		if (block->next == NULL) {
-			// also we should traverse and munmap all the blocks
-			Block *current_block = block;
-			Block *last_visited_block = block;
-			size_t freeable_size = 0;
-
-			while (current_block != NULL && current_block->free == 1) {
-				freeable_size += current_block->size + sizeof(Block);
-				last_visited_block = current_block;
-				current_block = current_block->prev;
-			}
-
 			// if the current block is not null and it has a prev. we change the previous block's next to be NULL
-			if (current_block != NULL && current_block->prev != NULL) {
-				current_block->prev->next = NULL;
+			if (block != NULL && block->prev != NULL) {
+				block->prev->next = NULL;
 			}
 
-			if (current_block == NULL) {
-				if (munmap(last_visited_block, freeable_size) != 0) {
-					return 2;
-				};
-			}
-			else
-			{
-				if (munmap(current_block, freeable_size) != 0) {
-					return 3;
-				};
-			}
+			if (munmap(block, block->size) != 0) {
+				return errno;
+			};
 		}
-		// add an if here as well
-		merge_blocks(block);
-		return 0;
 	}
+	return 0;
 }
 
 Block *merge_blocks(Block* block) {

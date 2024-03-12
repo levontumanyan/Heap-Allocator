@@ -10,3 +10,13 @@ void test_small_my_malloc() {
 	printf("my_alloc returned a not null pointer.  ✅\n");
 	printf("---------------\n");
 }
+
+void test_my_malloc_block() {
+	// Request a small amount of memory 1Kb
+	size_t size = 1024;
+	char **buf = my_malloc(size);
+
+	Block *block = (Block*)buf - 1;
+	printf("Size of block is: %zu\n", block->size);
+	printf("---------------\n");
+}

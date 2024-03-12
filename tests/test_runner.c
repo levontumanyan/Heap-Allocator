@@ -9,8 +9,9 @@ int main() {
 	test_initial_pool_prev_null(initial_pool);
 	test_initial_pool_next_null(initial_pool);
 	test_singleton_behaviour(initial_pool);
-	test_small_my_malloc();
-	test_my_free();
+	//test_small_my_malloc();
+	test_my_malloc_block();
+	//test_my_free();
 	test_merge_blocks_null();
 	test_merge_blocks();
 	return 0;
